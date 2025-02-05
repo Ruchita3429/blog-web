@@ -13,7 +13,6 @@ const SigninForm = () => {
   const [error, setError] = React.useState("");
   const [buttonDisabled , setButtonDisabled]= useState(false);
   const router = useRouter();
-  const [loading, setLoading] = useState();
 
   const onSignin = async (e) => {
     e.preventDefault();
@@ -26,7 +25,6 @@ const SigninForm = () => {
     // }
   
     try {
-      setLoading(true);
       const response = await fetch('http://localhost:3000/api/signin', {
         method: 'POST', // Make sure this is POST
         headers: { 'Content-Type': 'application/json' },
@@ -43,9 +41,7 @@ const SigninForm = () => {
       }
     } catch (error) {
       console.error("Signin failed:", error);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
   
   useEffect(() => {
@@ -58,10 +54,7 @@ const SigninForm = () => {
   return (
     <div className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg">
       <form onSubmit={onSignin}>
-        <div className="text-2xl font-bold text-center mb-4 text-gray-800">
-          <h1>Login </h1>
-          <br/> {loading ? "wait" : ""}
-        </div>
+          <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">Login </h1>
 
         {/* Email input */}
         <div className="mb-4">

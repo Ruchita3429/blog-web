@@ -35,6 +35,10 @@ const Navbar = () => {
               Contact
             </Link>
           </li>
+          <li>
+          <Link href="/signup">Signup for free
+          </Link>
+          </li>
         </ul>
       </div>
     </nav>

@@ -1,19 +1,7 @@
-import connectToDatabase from "../../../lib/dbconnect";
-import {User} from "../../../models/userModel";
+import connectToDatabase from "../../../../lib/dbconnect";
+import {User} from "../../../../models/userModel";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
-
-export async function GET() {
-    let data = []
-    try {
-        await connectToDatabase();
-         data = await User.find(); 
-    } catch (error) {
-         data = { success: false}
-    }
-    return NextResponse.json({ result: data , success: true});
-  }
-  
 
  export async function POST(request) {
   try {

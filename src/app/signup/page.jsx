@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { validateSignupForm } from "@/utils/helper"; // Assuming the validate function is correctly exported
+import { validateSignupForm } from "@/helper";
 import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
@@ -15,7 +15,6 @@ const SignupForm = () => {
   });
   const [buttonDisabled , setButtonDisabled]= useState(false);
   const router = useRouter();
-  const [loading, setLoading] = useState();
   const handleChange = (e) => {
     const { name, value } = e.target; // Destructure name and value from the event target
     setUser((prev) => ({
@@ -37,7 +36,6 @@ const SignupForm = () => {
     }
 
     try {
-      setLoading(true);
       const response = await fetch('http://localhost:3000/api/signup', {
         method: 'POST',
         headers: {
@@ -56,9 +54,7 @@ const SignupForm = () => {
       
     } catch (error) {
       console.error('Signup failed:', error);
-    } finally {
-      setLoading(false);
-    }
+    } 
   };
 
   useEffect(() => {
@@ -76,7 +72,7 @@ const SignupForm = () => {
       onSubmit={onSignup}
     >
       <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">
-        Sign Up <br/> {loading ? "wait" : ""}
+        Sign Up
       </h1>
 
       {/* Show Error Message */}

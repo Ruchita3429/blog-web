@@ -1,4 +1,4 @@
-import connectToDatabase from "../../../lib/dbconnect";
+import connectToDatabase from "../../../../lib/dbconnect";
 import {Blog} from "../../../lib/models/blog"
 import { NextResponse } from "next/server";
 
