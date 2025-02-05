@@ -1,5 +1,5 @@
-import connectToDatabase from "../../../../lib/dbconnect";
-import {User} from "../../../../models/userModel";
+import connectToDatabase from "../../../lib/dbconnect";
+import {User} from "../../../models/userModel";
 import { NextResponse } from "next/server";
 import bcryptjs from "bcryptjs";
 

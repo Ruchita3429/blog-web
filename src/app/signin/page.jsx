@@ -2,7 +2,6 @@
 import React , {useState, useEffect} from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-// import { validateSignupForm } from "@/utils/helper";
 
 const SigninForm = () => {
   const [user, setUser] = React.useState({
@@ -18,12 +17,7 @@ const SigninForm = () => {
     e.preventDefault();
     setError(""); // Clear any existing errors
   
-    // const validationError = validateSignupForm(user);
-    // if (validationError) {
-    //   setError(validationError);
-    //   return;
-    // }
-  
+
     try {
       const response = await fetch('http://localhost:3000/api/signin', {
         method: 'POST', // Make sure this is POST

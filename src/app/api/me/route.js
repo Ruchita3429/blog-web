@@ -1,0 +1,18 @@
+import { NextResponse } from "next/server";
+import { User } from "../../../models/userModel";
+import connectToDatabase from "../../../lib/dbconnect";
+import {getDataFromToken} from "@/helpers/getDataFromToken";
+
+export async function GET(request) {
+    try {
+        await connectToDatabase();
+        const userId = await getDataFromToken(request);
+        const user = await User.findOne({_id:userId}).select("-password")
+
+        return NextResponse.json({  success: true, message: "user found", data:user});
+
+    } catch (error) {
+        return NextResponse.json({success: false, error:error.message}, {status : 404});
+
+    }
+}

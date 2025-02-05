@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { validateSignupForm } from "@/helper";
+import { validateSignupForm } from "@/helpers/helper";
 import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
