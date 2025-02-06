@@ -49,7 +49,7 @@ const Home = () => {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-      <div className="w-max max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-lg ">
+      <div className="w-max max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg ">
         <h1 className="text-3xl font-bold mb-4 text-center">
           Welcome to the Blog App
         </h1>
@@ -57,8 +57,8 @@ const Home = () => {
           <div className="text-center mb-4">
             <p className="text-lg">Welcome back! Create your own blog.</p>
             <a
-              href="/newblog"
-              className="text-white bg-blue-500 py-2 px-4 rounded-md hover:bg-blue-600"
+              href="/newBlog"
+              className="text-white bg-blue-500 py-2 px-4 rounded-md hover:bg-blue-600 "
             >
               Create Blog
             </a>
