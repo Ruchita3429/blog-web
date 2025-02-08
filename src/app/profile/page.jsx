@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Link from 'next/link';
+import config from '@/config/index';
 
 const Profile = () => {
   const router = useRouter();
@@ -12,7 +13,7 @@ const Profile = () => {
   useEffect(() => {
     const getUserDetail = async () => {
       try {
-        const response = await axios.get('/api/me');  // Fetch the user data
+        const response = await axios.get(`${config.baseUrl}/api/me`);  // Fetch the user data
         console.log("User API Response:", response.data); // Debugging log
         setData(response.data.data); // Store the user data in state
       } catch (error) {
@@ -25,7 +26,7 @@ const Profile = () => {
   
   const logout = async () => {
     try {
-      const response = await fetch('/api/logout', {
+      const response = await fetch(`${config.baseUrl}/api/logout`, {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',

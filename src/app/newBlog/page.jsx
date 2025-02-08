@@ -1,5 +1,6 @@
 "use client"
 import React , {useState} from 'react'
+import config from '@/config/index';
 
 const blog = () => {
     const [formData, setFormData] = useState({
@@ -18,7 +19,7 @@ const blog = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-          const response = await fetch('/api/blogDB', { 
+          const response = await fetch(`${config.baseUrl}/api/blogDB`, { 
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({

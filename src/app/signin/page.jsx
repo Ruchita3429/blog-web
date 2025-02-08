@@ -2,6 +2,7 @@
 import React , {useState, useEffect} from 'react';
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import config from '@/config/index';
 
 const SigninForm = () => {
   const [user, setUser] = React.useState({
@@ -19,7 +20,7 @@ const SigninForm = () => {
   
 
     try {
-      const response = await fetch('/api/signin', {
+      const response = await fetch(`${config.baseUrl}/api/signin`, {
         method: 'POST', // Make sure this is POST
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(user),

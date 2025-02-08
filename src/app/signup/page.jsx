@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { validateSignupForm } from "@/helpers/helper";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import config from '@/config/index';
 
 const SignupForm = () => {
   const [user, setUser] = React.useState({
@@ -26,36 +28,33 @@ const SignupForm = () => {
 
   const onSignup = async (e) => {
     e.preventDefault();
-    setError(""); // Clear any existing errors
+    setError("");
   
-    // Call the validation function
     const validationError = validateSignupForm(user);
     if (validationError) {
       setError(validationError);
       return;
     }
-
+  
     try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
+      const response = await axios.post(`${config.baseUrl}/api/signup`, user, {
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify(user),
       });
   
-      const result = await response.json();
-      if(result.success){
-        alert("Signup successfull")
+      if (response.data.success) {
+        alert("Signup successful!");
         router.push("/signin");
-      }else {
-        alert("Signup failed");
+      } else {
+        alert(response.data.message || "Signup failed");
       }
-      
     } catch (error) {
-      console.error('Signup failed:', error);
-    } 
+      console.error("Signup failed:", error);
+      setError(error.response?.data?.message || "Something went wrong");
+    }
   };
+  
 
   useEffect(() => {
     if(user.email.length > 0 && user.username.length > 0 && user.password.length > 0

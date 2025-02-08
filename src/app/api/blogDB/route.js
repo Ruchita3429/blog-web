@@ -33,7 +33,8 @@ import connectToDatabase from "@/lib/dbconnect";
         title,
         content,
         author: user._id,
-        authorName: user.username,   
+        authorName: user.username,  
+        authorCountry: user.country || 'Unknown',
       });
   
       await newBlog.save();

@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import config from "@/config/index";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);  // Initialize blogs as an empty array
@@ -9,7 +10,7 @@ const Home = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get("/api/blogDB");
+        const response = await axios.get(`${config.baseUrl}/api/blogDB`);
         if (response.data && Array.isArray(response.data.blogs)) {
           setBlogs(response.data.blogs);  // Ensure the response is an array
         } else {
@@ -26,7 +27,7 @@ const Home = () => {
     // Check login status
     const checkLoginStatus = async () => {
       try {
-        const response = await fetch("/api/me", {
+        const response = await fetch(`${config.baseUrl}/api/me`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -75,7 +76,7 @@ const Home = () => {
           </div>
         )}
 
-        <h2 className="text-2xl font-semibold mb-2">Latest Blogs</h2>
+<h2 className="text-2xl font-semibold mb-2">Latest Blogs</h2>
         {displayedBlogs.length === 0 ? (
           <p>No blogs yet. Be the first to create one!</p>
         ) : (
@@ -85,7 +86,11 @@ const Home = () => {
               <p className="text-gray-700">
                 {blog.content && blog.content.slice(0, 100)}...
               </p>
-              <p className="text-sm text-gray-500">By {blog.authorName}</p>
+              <div className="mt-2 text-sm text-gray-500">
+                <p><strong>By:</strong> {blog.authorName}</p>
+                <p><strong>From:</strong> {blog.authorCountry || 'Unknown'}</p>
+                <p><strong>Posted:</strong> {new Date(blog.createdAt).toLocaleDateString()}</p>
+              </div>
               <a
                 href={`/blog/${blog._id}`}
                 className="text-blue-500 hover:underline"
@@ -95,7 +100,6 @@ const Home = () => {
             </div>
           ))
         )}
-
         {blogs.length > 3 && (
           <div className="text-center mt-4">
             <a
