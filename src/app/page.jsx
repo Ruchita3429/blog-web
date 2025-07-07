@@ -51,8 +51,8 @@ const Home = () => {
   const displayedBlogs = blogs.slice(0, 3);
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col justify-center items-center">
-      <div className="w-max max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg ">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center px-2 sm:px-4">
+      <div className="max-w-3xl w-full mx-auto p-6 bg-white shadow-lg rounded-lg">
         <h1 className="text-3xl font-bold mb-4 text-center">
           Welcome to the Blog App
         </h1>
@@ -83,22 +83,25 @@ const Home = () => {
           <p>No blogs yet. Be the first to create one!</p>
         ) : (
           displayedBlogs.map((blog) => (
-            <div key={blog._id} className="mb-4 p-4 border border-gray-300 rounded-lg">
-              <h3 className="text-xl font-bold">{blog.title}</h3>
-              <p className="text-gray-700">
+            <div
+              key={blog._id}
+              className="mb-6 border border-gray-300 rounded-lg hover:shadow-lg transition-shadow cursor-pointer p-6 bg-gray-100 shadow-md"
+            >
+              <h2 className="text-2xl font-bold">{blog.title}</h2>
+              <p className="mb-4 text-gray-800 whitespace-pre-wrap break-words leading-relaxed overflow-hidden" style={{ wordBreak: 'break-word' }}>
                 {blog.content && blog.content.slice(0, 100)}...
               </p>
               <div className="mt-2 text-sm text-gray-500">
                 <p><strong>By:</strong> {blog.authorName}</p>
                 <p><strong>From:</strong> {blog.authorCountry || 'Unknown'}</p>
                 <p><strong>Posted:</strong> {new Date(blog.createdAt).toLocaleDateString()}</p>
+                <a
+                  href={`/blog/${blog._id}`}
+                  className="text-blue-500 hover:underline mt-2 block"
+                >
+                  Read More
+                </a>
               </div>
-              <a
-                href={`/blog/${blog._id}`}
-                className="text-blue-500 hover:underline"
-              >
-                Read More
-              </a>
             </div>
           ))
         )}

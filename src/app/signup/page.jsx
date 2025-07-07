@@ -67,7 +67,7 @@ const SignupForm = () => {
   },[user])
   return (
     <form
-      className="max-w-md mx-auto p-6 bg-white shadow-lg rounded-lg"
+      className="w-full max-w-md mx-auto p-4 sm:p-6 bg-white shadow-lg rounded-lg"
       onSubmit={onSignup}
     >
       <h1 className="text-2xl font-bold text-center mb-4 text-gray-800">
