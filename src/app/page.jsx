@@ -12,7 +12,9 @@ const Home = () => {
       try {
         const response = await axios.get(`${config.baseUrl}/api/blogDB`);
         if (response.data && Array.isArray(response.data.blogs)) {
-          setBlogs(response.data.blogs);  // Ensure the response is an array
+          // Sort blogs by createdAt descending (latest first)
+          const sortedBlogs = response.data.blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+          setBlogs(sortedBlogs);  // Ensure the response is an array
         } else {
           setBlogs([]);  // Fallback in case the response structure is unexpected
         }

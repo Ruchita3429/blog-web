@@ -1,35 +1,39 @@
 "use client";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
 import config from "@/config/index";
 
 const BlogDetails = () => {
-  const [blogs, setBlogs] = useState([]);
+  const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const router = useRouter();
+  const params = useParams();
+  const blogId = params?.id;
 
   useEffect(() => {
-    const fetchBlogs = async () => {
+    const fetchBlog = async () => {
       try {
         const response = await fetch(`${config.baseUrl}/api/blogDB`);
         const data = await response.json();
-
         if (data.success) {
-          setBlogs(data.blogs);
+          const foundBlog = data.blogs.find((b) => b._id === blogId);
+          if (foundBlog) {
+            setBlog(foundBlog);
+          } else {
+            setError("Blog not found");
+          }
         } else {
-          setError(data.message || "Failed to fetch blogs");
+          setError(data.message || "Failed to fetch blog");
         }
       } catch (error) {
-        console.error("Error fetching blogs:", error);
-        setError("Error loading blogs");
+        setError("Error loading blog");
       } finally {
         setLoading(false);
       }
     };
-
-    fetchBlogs();
-  }, []);
+    if (blogId) fetchBlog();
+  }, [blogId]);
 
   if (loading) {
     return (
@@ -58,42 +62,27 @@ const BlogDetails = () => {
     );
   }
 
+  if (!blog) return null;
+
   return (
     <div className="max-w-4xl mx-auto p-6 mt-8 bg-white shadow-lg rounded-lg">
       <button
         onClick={() => router.back()}
         className="mb-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
-        ← Go Back
+         Go Back
       </button>
-
-      <h1 className="text-3xl font-bold mb-6 text-center">Latest Blogs</h1>
-
-      {blogs.length === 0 ? (
-        <p className="text-center text-gray-600">No blogs available.</p>
-      ) : (
-        <div className="space-y-6">
-          {blogs.map((blog) => (
-            <div key={blog._id} className="p-6 bg-gray-100 rounded-lg shadow-md">
-              <p className="mb-4 text-gray-800 whitespace-pre-wrap break-words leading-relaxed overflow-hidden" style={{ wordBreak: "break-word" }}>
-                {blog.content.substring(0, 200)}...
-              </p>
-              <div className="text-sm text-gray-500">
-                <p>
-                  <strong>Author:</strong> {blog.authorName}
-                </p>
-                <p>
-                  <strong>From:</strong> {blog.authorCountry || "Unknown"}
-                </p>
-                <p>
-                  <strong>Posted:</strong>{" "}
-                  {new Date(blog.createdAt).toLocaleDateString()}
-                </p>
-              </div>
-            </div>
-          ))}
+      <h1 className="text-3xl font-bold mb-6 text-center">{blog.title}</h1>
+      <div className="p-6 bg-gray-100 rounded-lg shadow-md">
+        <p className="mb-4 text-gray-800 whitespace-pre-wrap break-words leading-relaxed" style={{ wordBreak: "break-word" }}>
+          {blog.content}
+        </p>
+        <div className="text-sm text-gray-500">
+          <p><strong>Author:</strong> {blog.authorName}</p>
+          <p><strong>From:</strong> {blog.authorCountry || "Unknown"}</p>
+          <p><strong>Posted:</strong> {new Date(blog.createdAt).toLocaleDateString()}</p>
         </div>
-      )}
+      </div>
     </div>
   );
 };
